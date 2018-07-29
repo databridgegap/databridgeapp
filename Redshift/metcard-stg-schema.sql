@@ -2,7 +2,7 @@ create schema stg;
 
 create table stg.StopLocation
 (
- StopLocationID int  encode raw
+ StopLocationID int primary key encode raw
 ,StopNameShort varchar(60)  encode zstd
 ,StopNameLong varchar(100)  encode zstd
 ,StopType varchar(28)  encode raw
@@ -29,7 +29,7 @@ select count(*) from stg.StopLocation
 
 create table stg.CardSubType
 (
- CardSubTypeID int  encode zstd
+ CardSubTypeID int primary key encode zstd
 ,CardSubTypeDesc varchar(60)  encode zstd
 ,PaymentType char(4)  encode zstd
 ,FareType varchar(10)  encode zstd
@@ -48,11 +48,12 @@ delimiter '|'
 
 select * from stg.CardSubType;
 ;
-drop table stg.calendar;
+
+
 create table stg.calendar
 (
  DateId int  encode lzo
-,TravelDate date  encode raw
+,TravelDate date primary key encode raw
 ,CalendarYear int  encode runlength
 ,FinancialYear varchar(16) encode runlength
 ,FinancialMonth int encode runlength
@@ -77,23 +78,23 @@ create table stg.calendar
 diststyle all
 sortkey (TravelDate, CalendarYear)
 ;
-20170930|2017-09-30|2017|FY2017 - 2018|9|September|201709|2017Q3|FY17-18Q1|39|13|Saturday|Weekend|Saturday|6|Saturday|201709|Sep 17/|9|1239|w/e 2017-09-30|September Qtr. 2017
-20080615|2008-06-15|2008|FY2007 - 2008|18|June|200806|2008Q2|FY07-08Q4|24|50|Sunday|Weekend|Sunday|7|Sunday|200818|Jun 07/|6|755|w/e 2008-06-21|June Qtr. 2008
-20040222|2004-02-22|2004|FY2003 - 2004|14|February|200402|2004Q1|FY03-04Q3|8|34|Sunday|Weekend|Normal Sunday|7|Sunday|200414|Feb 03/|2|530|w/e 2004-02-28|March Qtr. 2004
-20190620|2019-06-20|2019|FY2018 - 2019|18|June|201906|2019Q2|FY18-19Q4|24|51|Weekday|Weekday|0|4|Thursday|201906|Jun 18/|6|1329|w/e 2019-06-22|June Qtr. 2019
-;
 
 copy stg.calendar
 from 's3://databridge-syd/calendar.txt' 
 iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 ;
-;
+
 select starttime, err_code, err_reason, colname, raw_field_value
-;select *
 from stl_load_errors
 order by starttime desc
+limit 5
 ;
+
+set slot wlm_query_slot_count to 2;
+vacuum stg.StopLocation to 100 percent;
+vacuum stg.CardSubType to 100 percent;
+vacuum stg.calendar to 100 percent;
 
 
 create table stg.ScanOn (
@@ -101,7 +102,7 @@ create table stg.ScanOn (
 ,TravelDate date  encode raw
 ,DateTime timestamp  encode lzo
 ,CardID int  encode lzo
-,CardType int  encode mostly8
+,CardType smallint  encode mostly8
 ,VehicleID int  encode zstd
 ,ParentRoute varchar(16)  encode zstd
 ,RouteID int  encode lzo
@@ -121,25 +122,23 @@ gzip
 
 create table stg.ScanOff (
  Mode int  encode lzo 
-,BusinessDate date  encode raw
+,TravelDate date  encode raw
 ,DateTime timestamp  encode lzo
 ,CardID int  encode lzo
-,CardType int  encode mostly8
+,CardType smallint  encode mostly8
 ,VehicleID int  encode zstd
 ,ParentRoute varchar(16)  encode zstd
 ,RouteID int  encode lzo
 ,StopID int  encode raw
 )
 distkey (StopID)
-sortkey (BusinessDate, StopID)
+sortkey (TravelDate, StopID)
 ;
 
-truncate table stg.ScanOff;
 copy stg.ScanOff
 from 's3://databridge-syd/scanoff.manifest.json' manifest
 iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
-TRUNCATECOLUMNS
 gzip
 ;
 
