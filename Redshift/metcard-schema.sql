@@ -20,7 +20,7 @@ sortkey (StopType, SuburbName)
 	
 copy stg.StopLocation
 from 's3://databridge-syd/stop_locations.txt' 
-iam_role ''
+iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 ;
 
@@ -42,7 +42,7 @@ sortkey(FareType, PaymentType, CardSubTypeDesc)
 
 copy stg.CardSubType
 from 's3://databridge-syd/card_types.txt' 
-iam_role ''
+iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 ;
 
@@ -85,7 +85,7 @@ sortkey (TravelDate, CalendarYear)
 
 copy stg.calendar
 from 's3://databridge-syd/calendar.txt' 
-iam_role ''
+iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 ;
 ;
@@ -113,7 +113,7 @@ sortkey (TravelDate, StopID)
 
 copy stg.ScanOn
 from 's3://databridge-syd/scanon.manifest.json' manifest
-iam_role ''
+iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 gzip
 ;
@@ -137,7 +137,7 @@ sortkey (BusinessDate, StopID)
 truncate table stg.ScanOff;
 copy stg.ScanOff
 from 's3://databridge-syd/scanoff.manifest.json' manifest
-iam_role ''
+iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 TRUNCATECOLUMNS
 gzip
