@@ -143,21 +143,3 @@ TRUNCATECOLUMNS
 gzip
 ;
 
-create schema refined;
-
-create table refined.scanoffon
-(
- Mode int  encode lzo 
-,BusinessDate date  encode raw
-,DateTime timestamp  encode lzo
-,CardID int  encode lzo
-,CardType int  encode mostly8
-,VehicleID int  encode zstd
-,ParentRoute varchar(16)  encode zstd
-,RouteID int  encode lzo
-,StopID int  encode raw
-,onoff varchar(3) encode raw 
-)
-distkey (StopID)
-sortkey (BusinessDate, onoff, StopID)
-;
