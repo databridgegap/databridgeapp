@@ -3,7 +3,7 @@
 drop schema tt;
 create external schema gtt -- glue's time-table data
 from data catalog database 'ptv-timetables'
-iam_role 'arn:aws:iam::579300331566:role/RedshiftReadFromS3';
+iam_role 'arn:aws:iam:::role/RedshiftReadFromS3';
 
 select * from svv_external_schemas;
 select * from svv_external_tables;
