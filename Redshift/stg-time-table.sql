@@ -86,26 +86,6 @@ ignoreheader 1
 format csv gzip
 ;
 
-drop table if exists stg_tt.stops;
-create table stg_tt.stops
-(
-	stop_id integer primary key encode lzo,
-	stop_name varchar(124) encode lzo,
-	stop_lat float8 encode zstd,
-	stop_lon float8 encode zstd
-)
-distkey (stop_id)
-sortkey (stop_id);
-
-copy stg_tt.stops
-from 's3://databridge-ptv-timetables/stops/stops' 
-iam_role '<<>>'
-dateformat 'yyyymmdd'
-ignoreblanklines
-ignoreheader 1
-format csv gzip
-;
-
 drop table if exists stg_tt.trips;
 create table stg_tt.trips
 (
@@ -121,6 +101,26 @@ sortkey (route_id);
 
 copy stg_tt.trips
 from 's3://databridge-ptv-timetables/trips/trips' 
+iam_role '<<>>'
+dateformat 'yyyymmdd'
+ignoreblanklines
+ignoreheader 1
+format csv gzip
+;
+
+drop table if exists stg_tt.stops;
+create table stg_tt.stops
+(
+	stop_id integer primary key encode lzo,
+	stop_name varchar(124) encode lzo,
+	stop_lat float8 encode zstd,
+	stop_lon float8 encode zstd
+)
+distkey (stop_id)
+sortkey (stop_id);
+
+copy stg_tt.stops
+from 's3://databridge-ptv-timetables/stops/stops' 
 iam_role '<<>>'
 dateformat 'yyyymmdd'
 ignoreblanklines
