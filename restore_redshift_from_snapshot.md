@@ -11,9 +11,9 @@
 
 5. Press Restore in the bottom right corner (you might have to scroll down)
 
-* More Information:
+More Information:
 
-⋅⋅⋅ [https://docs.aws.amazon.com/redshift/latest/mgmt/managing-snapshots-console.html]
-⋅⋅⋅ [https://docs.aws.amazon.com/redshift/latest/mgmt/rs-tutorial-using-snapshot-restore-resize-operations.html#rs-tutorial-restore-snapshot]
+   [https://docs.aws.amazon.com/redshift/latest/mgmt/managing-snapshots-console.html]
+   [https://docs.aws.amazon.com/redshift/latest/mgmt/rs-tutorial-using-snapshot-restore-resize-operations.html#rs-tutorial-restore-snapshot]
 
 
