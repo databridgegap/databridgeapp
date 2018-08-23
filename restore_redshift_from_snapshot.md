@@ -4,10 +4,12 @@
 [https://ap-southeast-2.console.aws.amazon.com/redshift/home?region=ap-southeast-2#snapshots:id=]
 
 2. Select the latest Snapshot
+![Select the latest Snapshot](https://raw.githubusercontent.com/databridgegap/databridgeapp/master/restore-cluster-1.png "Select the latest Snapshot")
 
 3. In the Actions menu, select Restore From Snapshot
 
 4. Leave all settings as default, except set Cluster Parameter Group to **databridgespecial**, and VPC security group to **Redshift**
+![set set Cluster Parameter Group to databridgespecial](https://raw.githubusercontent.com/databridgegap/databridgeapp/master/rs-restore-options.png "Redshift Restore Options")
 
 5. Press Restore in the bottom right corner (you might have to scroll down)
 
