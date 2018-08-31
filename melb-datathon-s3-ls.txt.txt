@@ -1,3 +1,6 @@
+
+aws s3 ls s3://melb-datathon/SAMPLE/ --recursive
+
 2018-07-21 18:32:44          0 SAMPLE/
 2018-07-21 18:33:31        420 SAMPLE/Header_FieldDataTypes_DimStopLocation.txt
 2018-07-21 18:33:31        263 SAMPLE/Header_FieldDataTypes_dim_Card_Subtype.txt
