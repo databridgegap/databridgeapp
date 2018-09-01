@@ -58,7 +58,7 @@ sortkey (route_id);
 
 copy stg_tt.routes
 from 's3://databridge-ptv-timetables/routes/routes' 
-iam_role 'arn:aws:iam::579300331566:role/RedshiftReadFromS3'
+iam_role '<<Role for Redshift to fead from S3>>'
 dateformat 'yyyymmdd'
 ignoreblanklines
 ignoreheader 1

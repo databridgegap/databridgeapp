@@ -12,6 +12,8 @@ create or replace view model1.calendar as
 select * from stg.calendar
 ;
 
+drop view model1.scan;
+drop table if exists stg.scan;
 create table stg.scan (
  ScanType char(2) encode raw
 ,Mode int  encode lzo 
@@ -24,14 +26,14 @@ create table stg.scan (
 ,RouteID int  encode lzo
 ,StopID int references stg.StopLocation (StopLocationID) encode raw
 )
-distkey (StopID)
-sortkey (ScanType, TravelDate, StopID)
+distkey (CardID)
+sortkey (TravelDate, CardID, DateTime)
 ;
 
 insert into stg.scan
-select 'on' as ScanType, a.* from stg.ScanOn a
+select 'on' as ScanType, a.* from stg.uScanOn a
 union all
-select 'of' as ScanType, b.* from stg.ScanOff b
+select 'of' as ScanType, b.* from stg.uScanOff b
 ;
 
 create or replace view model1.scan as

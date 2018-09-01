@@ -97,6 +97,7 @@ vacuum stg.CardSubType to 100 percent;
 vacuum stg.calendar to 100 percent;
 
 
+drop table if exists stg.ScanOn;
 create table stg.ScanOn (
  Mode int  encode lzo 
 ,TravelDate date  encode raw
@@ -108,18 +109,23 @@ create table stg.ScanOn (
 ,RouteID int  encode lzo
 ,StopID int  encode raw
 )
-distkey (StopID)
-sortkey (TravelDate, StopID)
+distkey (CardID)
+sortkey (TravelDate, CardID)
 ;
 
+truncate table stg.ScanOn;
+;
+
+truncate table stg.ScanOn;
 copy stg.ScanOn
-from 's3://databridge-syd/scanon.manifest.json' manifest
+from 's3://databridge-syd/scanon.manifest-full.json' manifest
 iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 gzip
 ;
 
 
+drop table if exists stg.ScanOff;
 create table stg.ScanOff (
  Mode int  encode lzo 
 ,TravelDate date  encode raw
@@ -131,12 +137,13 @@ create table stg.ScanOff (
 ,RouteID int  encode lzo
 ,StopID int  encode raw
 )
-distkey (StopID)
-sortkey (TravelDate, StopID)
+distkey (CardID)
+sortkey (TravelDate, CardID)
 ;
 
+truncate table stg.ScanOff;
 copy stg.ScanOff
-from 's3://databridge-syd/scanoff.manifest.json' manifest
+from 's3://databridge-syd/scanoff.manifest-full.json' manifest
 iam_role '<<arn of role not included because this is a public repository>>'
 delimiter '|'
 gzip

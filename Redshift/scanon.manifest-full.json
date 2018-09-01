@@ -1,3 +1,4 @@
+{"entries": [
 {"url":"s3://melb-datathon/SAMPLE/Samp_0/ScanOnTransaction/2015/Week27/QID3530815_20180713_20515_0.txt.gz"},
 {"url":"s3://melb-datathon/SAMPLE/Samp_0/ScanOnTransaction/2015/Week28/QID3530826_20180713_20555_0.txt.gz"},
 {"url":"s3://melb-datathon/SAMPLE/Samp_0/ScanOnTransaction/2015/Week40/QID3530961_20180713_21522_0.txt.gz"},
@@ -1567,5 +1568,5 @@
 {"url":"s3://melb-datathon/SAMPLE/Samp_5/ScanOnTransaction/2018/Week6/QID3533043_20180713_35231_0.txt.gz"},
 {"url":"s3://melb-datathon/SAMPLE/Samp_5/ScanOnTransaction/2018/Week7/QID3533054_20180713_35321_0.txt.gz"},
 {"url":"s3://melb-datathon/SAMPLE/Samp_5/ScanOnTransaction/2018/Week8/QID3533073_20180713_35416_0.txt.gz"},
-{"url":"s3://melb-datathon/SAMPLE/Samp_5/ScanOnTransaction/2018/Week9/QID3533086_20180713_35510_0.txt.gz"},
+{"url":"s3://melb-datathon/SAMPLE/Samp_5/ScanOnTransaction/2018/Week9/QID3533086_20180713_35510_0.txt.gz"}
 ]}
