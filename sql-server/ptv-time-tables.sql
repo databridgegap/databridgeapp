@@ -1,3 +1,10 @@
+drop table if exists [dbo].[routes-import];
+drop table if exists [dbo].[stops-import];
+drop table if exists [dbo].[trips-import];
+drop table if exists [dbo].[stop_times-import];
+drop table if exists [dbo].[calendar-import];
+
+
 drop table if exists routes;
 create table routes
 (
@@ -9,7 +16,6 @@ create table routes
 );
 
 insert into routes select * from [dbo].[routes-import];
-drop table [dbo].[routes-import];
 
 create unique index routes_ix_short_name on routes (route_short_name, route_id);
 
@@ -22,10 +28,7 @@ create table stops
 	stop_lon real
 );
 
-select distinct * into [dbo].[stops-import2] from [dbo].[stops-import];
-drop table [dbo].[stops-import2];
-insert into stops select * from [dbo].[stops-import2];
-drop table [dbo].[stops-import];
+insert into stops select * from [dbo].[stops-import];
 
 create unique index stops_ix_name on stops (stop_name, stop_id);
 
@@ -41,7 +44,6 @@ create table trips
 );
 
 insert into trips select * from [dbo].[trips-import];
-drop table [dbo].[trips-import];
 
 create unique index trips_ix_heading on trips (trip_headsign, trip_id) include (route_id);
 create unique index trips_ix_route_id on trips (route_id, trip_headsign, direction_id, trip_id);
@@ -63,7 +65,34 @@ create table stop_times
 );
 
 insert into stop_times select * from [dbo].[stop_times-import];
-drop table [dbo].[stop_times-import];
 
 create unique index stop_times_ix_1 on stop_times (stop_id, arrival_time, trip_id);
 create unique index stop_times_ix_2 on stop_times (trip_id, stop_sequence) include (stop_id, arrival_time);
+
+
+drop table if exists service_calendar;
+create table service_calendar(
+	service_id varchar(12),
+	monday bit,
+	tuesday bit,
+	wednesday bit,
+	thursday bit,
+	friday bit,
+	saturday bit,
+	sunday bit,
+	start_date date,
+	end_date date,
+	primary key (service_id, start_date, end_date)
+);
+
+insert into service_calendar select distinct * from [dbo].[calendar-import];
+
+create unique index service_calendar_ix_monday    on service_calendar (start_date, end_date, service_id) where monday    = 1;
+create unique index service_calendar_ix_tuesday   on service_calendar (start_date, end_date, service_id) where tuesday   = 1;
+create unique index service_calendar_ix_wednesday on service_calendar (start_date, end_date, service_id) where wednesday = 1;
+create unique index service_calendar_ix_thursday  on service_calendar (start_date, end_date, service_id) where thursday  = 1;
+create unique index service_calendar_ix_friday    on service_calendar (start_date, end_date, service_id) where friday    = 1;
+create unique index service_calendar_ix_saturday  on service_calendar (start_date, end_date, service_id) where saturday  = 1;
+create unique index service_calendar_ix_sunday    on service_calendar (start_date, end_date, service_id) where sunday    = 1;
+
+--	select * into [calendar-import] from service_calendar
