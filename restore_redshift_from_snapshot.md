@@ -8,7 +8,8 @@
 
 3. In the Actions menu, select Restore From Snapshot
 
-4. Leave all settings as default, except set Cluster Parameter Group to **databridgespecial**, and VPC security group to **Redshift**
+4. Be sure to set the Cluster Parameter Group to **databridgespecial**, and the VPC security group to **Redshift**; leave all other settings as default.
+
 ![set set Cluster Parameter Group to databridgespecial](https://raw.githubusercontent.com/databridgegap/databridgeapp/master/rs-restore-options.png "Redshift Restore Options")
 
 5. Press Restore in the bottom right corner (you might have to scroll down)
